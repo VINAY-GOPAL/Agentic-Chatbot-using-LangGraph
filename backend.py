@@ -143,6 +143,7 @@ def get_stock_price(symbol: str) -> dict:
     Fetch latest stock price for a given symbol (e.g. 'AAPL', 'TSLA')
     using Alpha Vantage with the API key from the environment.
     """
+    # Keep credentials out of source code and request URLs.
     api_key = os.getenv("ALPHA_VANTAGE_API_KEY")
     if not api_key:
         return {"error": "ALPHA_VANTAGE_API_KEY is not configured."}
