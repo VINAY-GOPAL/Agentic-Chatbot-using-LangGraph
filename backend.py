@@ -141,11 +141,23 @@ def calculator(expression: str) -> str:
 def get_stock_price(symbol: str) -> dict:
     """
     Fetch latest stock price for a given symbol (e.g. 'AAPL', 'TSLA')
-    using Alpha Vantage with API key in the URL.
+    using Alpha Vantage with the API key from the environment.
     """
-    url = f"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey=9MZO2JUBR7IFNTOI"
-    r = requests.get(url)
-    return r.json()
+    api_key = os.getenv("ALPHA_VANTAGE_API_KEY")
+    if not api_key:
+        return {"error": "ALPHA_VANTAGE_API_KEY is not configured."}
+
+    response = requests.get(
+        "https://www.alphavantage.co/query",
+        params={
+            "function": "GLOBAL_QUOTE",
+            "symbol": symbol,
+            "apikey": api_key,
+        },
+        timeout=10,
+    )
+    response.raise_for_status()
+    return response.json()
 
 
 
