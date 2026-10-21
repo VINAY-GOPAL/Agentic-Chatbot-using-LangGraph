@@ -24,6 +24,7 @@ RUN python -m pip install --upgrade pip && \
 # Copy the complete project
 COPY . .
 
+# Streamlit serves the application on this port inside the container.
 EXPOSE 8501
 
 CMD ["streamlit", "run", "app.py", \
